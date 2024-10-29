@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Схема бронирования столиков</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column; /* Изменяем направление на вертикальное */
+            align-items: center; /* Центрируем по горизонтали */
+            min-height: 100vh;
+            margin: 0;
+        }
+        h2 {
+            margin-top: 20px; /* Отступ сверху */
+            font-size: 24px; /* Увеличение размера шрифта */
+        }
+        .restaurant-layout {
+            position: relative;
+            width: 1300px;
+            height: 850px;
+            border: 2px solid #333;
+            background-color: #f9f9f9;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-gap: 10px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .table {
+    width: 80px;
+    height: 80px;
+    background-color: #28a745; /* Цвет фона */
+    color: #fff; /* Цвет текста */
+    display: flex; /* Используем Flexbox для центрирования */
+    align-items: center; /* Вертикальное центрирование */
+    justify-content: center; /* Горизонтальное центрирование */
+    border-radius: 8px; /* Скругленные углы */
+    cursor: pointer; /* Курсор указатель */
+    font-weight: bold; /* Жирный текст */
+    font-size: 14px; /* Размер шрифта */
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Плавный переход */
+}
+
+/* Эффекты при наведении */
+.table:hover {
+    transform: scale(1.05); /* Увеличение при наведении */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Тень при наведении */
+}
+
+.table.selected {
+    background-color: #dc3545; /* Цвет фона выбранного столика */
+}
+
+        }
+        .table.selected {
+            background-color: #dc3545;
+        }
+        .table_dlin {
+
+    width: 190px; /* Ширина столика */
+    height: 80px; /* Высота столика */
+    background-color: #28a745; /* Цвет фона */
+    color: #fff; /* Цвет текста */
+    display: flex; /* Используем Flexbox для центрирования */
+    align-items: center; /* Вертикальное центрирование */
+    justify-content: center; /* Горизонтальное центрирование */
+    border-radius: 8px; /* Скругленные углы */
+    cursor: pointer; /* Курсор указатель */
+    font-weight: bold; /* Жирный текст */
+    font-size: 14px; /* Размер шрифта */
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Плавный переход */
+}
+
+/* Эффекты при наведении */
+.table_dlin:hover {
+    transform: scale(1.05); /* Увеличение при наведении */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Тень при наведении */
+}
+
+.table_dlin.selected {
+    background-color: #dc3545; /* Цвет фона выбранного столика */
+}
+
+    </style>
+</head>
+<body>
+
+    <h2>Выберите столик для бронирования</h2> <!-- Новый заголовок здесь -->
+
+    <div class="restaurant-layout">
+        <div class="table" data-table="1">Столик 1</div>
+        <div class="table" data-table="2">Столик 2</div>
+        <div class="table_dlin" data-table="3">Столик 3</div>
+        <div class="table" data-table="4">Столик 4</div>
+        <div class="table" data-table="5">Столик 5</div>
+        <div class="table" data-table="6">Столик 6</div>
+        <div class="table_dlin" data-table="7">Столик 7</div>
+        <div class="table" data-table="8">Столик 8</div>
+        <div class="table" data-table="9">Столик 9</div>
+        <div class="table" data-table="10">Столик 10</div>
+        <div class="table" data-table="11">Столик 11</div>
+        <div class="table" data-table="12">Столик 12</div>
+        <div class="table_dlin" data-table="13">Столик 13</div>
+        <div class="table_dlin" data-table="14">Столик 14</div>
+        <div class="table_dlin" data-table="15">Столик 15</div>
+    </div>
+
+    <p id="selected-table">Выбранный столик: нет</p>
+    <button onclick="bookTable()">Забронировать столик</button>
+
+    <script>
+    // Получаем все элементы столиков
+    const tables = document.querySelectorAll('.table, .table_dlin'); // Добавлено .table_dlin
+    let selectedTable = null;
+
+    // Добавляем событие клика на каждый столик
+    tables.forEach(table => {
+        table.addEventListener('click', () => {
+            // Убираем выделение с предыдущего столика, если есть
+            if (selectedTable) {
+                selectedTable.classList.remove('selected');
+            }
+            // Выделяем новый выбранный столик
+            selectedTable = table;
+            selectedTable.classList.add('selected');
+            // Обновляем текст с выбранным столиком
+            document.getElementById('selected-table').innerText = 'Выбранный столик: ' + table.dataset.table;
+        });
+    });
+
+    // Функция для бронирования столика
+    function bookTable() {
+        if (selectedTable) {
+            alert('Вы забронировали ' + selectedTable.dataset.table);
+            // Переход на следующую страницу
+            window.location.href = 'http://127.0.0.1:5000/menu'; // Замените 'next_page.html' на нужный URL
+        } else {
+            alert('Пожалуйста, выберите столик для бронирования.');
+        }
+    }
+</script>
+
+
+</body>
+</html>
